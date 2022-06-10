@@ -1,0 +1,64 @@
+<form>
+  <div class="form-group form-inline">
+    Buscar libro por título, autor o género
+    <input
+      class="form-control ml-2"
+      type="text"
+      id="txtfilter"
+      [formControl]="filter"
+    />
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Título</th>
+      <th scope="col">Autor</th>
+      <th scope="col">Género</th>
+      <th scope="col">Año de publicación</th>
+      <th scope="col">Existencias</th>
+      <th scope="col">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of booklist | async">
+      <td>
+        <ngb-highlight
+          [result]="book.title"
+          [term]="filter.value"
+        ></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight
+          [result]="book.author.name"
+          [term]="filter.value"
+        ></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight
+          [result]="book.genre.name"
+          [term]="filter.value"
+        ></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight
+          [result]="book.publishYear | date: 'yyyy'"
+        ></ngb-highlight>
+      </td>
+      <td>
+        <ngb-highlight [result]="book.stock | number"></ngb-highlight>
+      </td>
+      <td>
+        <button
+          *ngIf="!book._id == 0"
+          type="button"
+          class="btn btn-info"
+          (click)="details(book._id)"
+        >
+          Ver detalles
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

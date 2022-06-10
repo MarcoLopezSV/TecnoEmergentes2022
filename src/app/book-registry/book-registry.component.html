@@ -1,0 +1,64 @@
+<h3>Lista de libros solicitados</h3>
+<div class="form-group form-check">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    id="checkshow"
+    (change)="showReturned($event)"
+  />
+  <label class="form-check-label" for="checkshow"
+    >Mostrar historial completo</label
+  >
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <!-- <th scope="col">Reg. N°</th> -->
+      <th scope="col">Libro</th>
+      <th scope="col">Solicitante</th>
+      <th scope="col">Fecha de salida</th>
+      <th scope="col">Regresado</th>
+      <th scope="col">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let reg of bookregistries">
+      <!-- <td *ngIf="!reg.Returned || showReturnedBooks">
+        {{ reg._id }}
+      </td> -->
+      <td *ngIf="!reg.Returned || showReturnedBooks">
+        {{ reg.book.title }}
+      </td>
+      <td *ngIf="!reg.Returned || showReturnedBooks">
+        {{ reg.user.firstName + " " + reg.user.lastName }}
+      </td>
+      <td *ngIf="!reg.Returned || showReturnedBooks">
+        {{ reg.dateCheckout | date: "MM-dd-yyyy" }}
+      </td>
+      <td *ngIf="!reg.Returned || showReturnedBooks">
+        <span *ngIf="reg.Returned" style="color: rgb(0, 150, 0)">SI</span
+        ><span *ngIf="!reg.Returned" style="color: rgb(150, 0, 0)">NO</span>
+      </td>
+      <td *ngIf="!reg.Returned || showReturnedBooks">
+        <button
+          *ngIf="!reg.Returned"
+          type="button"
+          (click)="returnBook(reg._id)"
+          class="btn btn-info"
+        >
+          Regresar
+        </button>
+        <button
+          *ngIf="reg.Returned"
+          type="button"
+          (click)="returnBook(reg._id)"
+          class="btn btn-secondary"
+          disabled="true"
+        >
+          Sin acción
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

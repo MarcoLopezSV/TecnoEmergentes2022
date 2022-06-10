@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card">
+        <img
+          src="{{ book.imageUrl }}"
+          width="180px"
+          height="500px"
+          class="card-img-top"
+          alt="{{ book.title }}"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{ book.title }}</h4>
+          <h5 class="card-subtitle" style="color: #888">
+            {{ book.genre.name }}
+          </h5>
+          <hr />
+          <p class="card-text">
+            <b>Author:</b> {{ book.author.name }} <br /><b>Año:</b>
+            {{ book.publishYear | date: "yyyy" }}<br /><b>En existencia:</b>
+            {{ stock }}
+          </p>
+          <div style="text-align: right">
+            <button
+              *ngIf="_libraryService.rolLogged"
+              [disabled]="book.stock <= 0 || requested"
+              type="button"
+              class="btn btn-info"
+              (click)="requestBook(book._id)"
+            >
+              Solicitar Libro
+            </button>
+            <div [hidden]="!requested">
+              <small class="text-danger">*Has solicitado este libro</small>
+            </div>
+            <div [hidden]="!(book.stock <= 0)">
+              <small class="text-danger">*No hay en existencia</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <h5 class="card-header">Descripción</h5>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">{{ book.title }}</h6>
+          <p class="card-text">{{ book.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+  <h3>{{ title }}</h3>
+  <form [formGroup]="form" (ngSubmit)="saveGender()">
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="name">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
+    <div>
+      <small class="text-danger" *ngIf="errorMessage"
+        >Error: {{ errorMessage }}</small
+      >
+    </div>
+  </form>
+  <hr />
+  <h3>Listado de géneros</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let genre of genres">
+        <td>
+          {{ genre._id }}
+        </td>
+        <td>
+          {{ genre.name }}
+        </td>
+        <td>
+          <button class="btn btn-info" (click)="editbtn(genre)">Editar</button>
+          &nbsp;
+          <button class="btn btn-danger" (click)="deletebtn(genre)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

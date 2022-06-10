@@ -1,0 +1,97 @@
+<div class="container">
+  <h3>Agregar usuario</h3>
+  <form [formGroup]="form" (ngSubmit)="saveUser()">
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="title">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          formControlName="firstName"
+        />
+      </div>
+      <div class="form-group col-md">
+        <label for="author">Apellido</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          formControlName="lastName"
+        />
+      </div>
+      <div
+        class="form-group col-md"
+        [hidden]="_libraryService.rolLogged != 'Administrador'"
+      >
+        <label for="idRol">Rol</label>
+        <select class="form-control" id="idRol" formControlName="idRol">
+          <option value="" disabled selected>Seleccione rol</option>
+          <option *ngFor="let rol of rols" value="{{ rol._id }}">
+            {{ rol.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="title">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+      </div>
+      <div class="form-group col-md">
+        <label for="title">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
+    <div>
+      <small class="text-danger" *ngIf="errorMessage"
+        >Error: {{ errorMessage }}</small
+      >
+    </div>
+  </form>
+  <hr />
+  <div [hidden]="_libraryService.rolLogged != 'Administrador'">
+    <h3>User List</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>
+            {{ user.idPerson }}
+          </td>
+          <td>
+            {{ user.firstName }}
+          </td>
+          <td>
+            {{ user.lastName }}
+          </td>
+          <td>
+            {{ user.rol.name }}
+          </td>
+          <td>
+            {{ user.email }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

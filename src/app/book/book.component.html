@@ -1,0 +1,126 @@
+<div class="container">
+  <h3>{{ title }}</h3>
+  <form [formGroup]="form" (ngSubmit)="saveBook()">
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="title">Título</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          formControlName="title"
+        />
+      </div>
+      <div class="form-group col-md">
+        <label for="author">Author</label>
+        <select class="form-control" id="author" formControlName="author">
+          <option value="" disabled selected>Seleccione un autor</option>
+          <option *ngFor="let author of authors" value="{{ author._id }}">
+            {{ author.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md">
+        <label for="stock">Existencia</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stock"
+          formControlName="stock"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="publishedYear">Fecha de publicación</label>
+        <input
+          type="date"
+          class="form-control"
+          id="publishedYear"
+          formControlName="publishedYear"
+        />
+      </div>
+      <div class="form-group col-md">
+        <label for="idGenre">Género</label>
+        <select class="form-control" id="idGgenre" formControlName="idGenre">
+          <option value="" disabled selected>Seleccione un género</option>
+          <option *ngFor="let genre of genres" value="{{ genre._id }}">
+            {{ genre.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md">
+        <label for="image">Link de portada (.jpg)</label>
+        <input
+          type="text"
+          class="form-control"
+          id="image"
+          formControlName="imageURL"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md">
+        <label for="description">Descripción</label>
+        <textarea
+          rows="5"
+          class="form-control"
+          id="description"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
+    <div>
+      <small class="text-danger" *ngIf="errorMessage"
+        >Error: {{ errorMessage }}</small
+      >
+    </div>
+  </form>
+  <hr />
+  <h3>Listado de libros</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Existencia</th>
+        <th scope="col">Año de publicación</th>
+        <th scope="col">Género</th>
+        <th scope="col">Miniatura</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>
+          {{ book.title }}
+        </td>
+        <td>
+          {{ book.author.name }}
+        </td>
+        <td>
+          {{ book.stock | number }}
+        </td>
+        <td>
+          {{ book.publishYear | date: "yyyy" }}
+        </td>
+        <td>
+          {{ book.genre.name }}
+        </td>
+        <td>
+          <img src="{{ book.imageUrl }}" width="50" height="90" />
+        </td>
+        <td>{{ book.description | slice: 0:30 }} ...</td>
+        <td>
+          <button class="btn btn-info" (click)="editbtn(book)">Editar</button>
+          &nbsp;
+          <button class="btn btn-danger" (click)="deletebtn(book)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
